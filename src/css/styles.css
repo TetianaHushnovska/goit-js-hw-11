@@ -7,12 +7,57 @@
 /* Common styles */
 @import url('./reset.css');
 @import url('./base.css');
-@import url('./container.css');
-@import url('./animations.css');
 
-/* Sections style */
-@import url('./header.css');
-@import url('./vite-promo.css');
-@import url('./badges.css');
-@import url('./back-link.css');
-@import url('./footer.css');
+*{
+  box-sizing: border-box;
+}
+
+body{
+  font-family: "Montserrat", serif;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.section-search{
+  max-width: 375px;
+  height: 40px;
+  margin: 36px auto 0 auto;
+}
+
+.css-input{
+  width: 272px;
+  height: 40px;
+  border: 1px solid #808080;
+  border-radius: 4px;
+  padding: 8px 16px;
+  letter-spacing: 0.04em;
+}
+
+.css-input:hover {
+  border-color: #000000;
+}
+
+.css-input:focus{
+  outline: none;
+  border-color: #4e75ff;
+}
+
+.css-input::placeholder{
+  color: #808080;
+  letter-spacing: 0.04em;
+}
+
+.css-button{
+  width: 91px;
+  height: 40px;
+  border: none;
+  border-radius: 8px;
+  background-color: #4e75ff;
+  color: #ffffff;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+
+.css-button:hover{
+  background-color: #4c8cff;
+}
