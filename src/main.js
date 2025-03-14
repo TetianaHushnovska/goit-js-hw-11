@@ -13,7 +13,7 @@ import axios from "axios";
 import responseData from './js/pixabay-api';
 import { makeGallery } from './js/render-functions';
 
-const searchForm = document.querySelector('.search-form');
+const searchForm = document.querySelector('.form');
 const input = document.querySelector('.js-input');
 const gallery = document.querySelector('.gallery');
 const loader = document.querySelector('.loader');
