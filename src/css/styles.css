@@ -22,6 +22,7 @@ body{
   max-width: 375px;
   height: 40px;
   margin: 36px auto 0 auto;
+  margin-bottom: 32px;
 }
 
 .css-input{
@@ -61,3 +62,114 @@ body{
 .css-button:hover{
   background-color: #4c8cff;
 }
+
+.gallery{
+  width: 1128px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin: 0 auto 0 auto;
+}
+
+.gallery-item{
+  width: 360px;
+  height: 200px;
+  border: 1px solid #808080;
+}
+
+img{
+  width: 100%;
+  height: 152px;
+  
+}
+
+.img-info{
+  width: 100%;
+  height: 48px;
+  display: flex;
+  flex-direction: row;
+  gap: 35px;
+  padding: 4px 25px 4px 20px;
+}
+
+.info-name{
+  font-size: 12px;
+  font-weight: 600;
+  display: block;
+}
+
+.info-data{
+  font-size: 12px;
+  font-weight: 400;
+  display: block;
+}
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  position: relative;
+  animation: rotate 1s linear infinite;
+  margin: auto;
+}
+
+.loader::before,
+.loader::after {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  inset: 0px;
+  border-radius: 50%;
+  border: 5px solid #000;
+  animation: prixClipFix 2s linear infinite;
+}
+
+.loader::after {
+  border-color: #FF3D00;
+  animation: prixClipFix 2s linear infinite, rotate 0.5s linear infinite reverse;
+  inset: 6px;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg)
+  }
+
+  100% {
+    transform: rotate(360deg)
+  }
+}
+
+@keyframes prixClipFix {
+  0% {
+    clip-path: polygon(50% 50%, 0 0, 0 0, 0 0, 0 0, 0 0)
+  }
+
+  25% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 0, 100% 0, 100% 0)
+  }
+
+  50% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 100% 100%, 100% 100%)
+  }
+
+  75% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 100%)
+  }
+
+  100% {
+    clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 0)
+  }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+

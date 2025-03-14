@@ -10,46 +10,85 @@ import 'simplelightbox/dist/simple-lightbox.min.css';
 import axios from "axios";
 
 // Імпорт модулів
-import getUrl from './js/pixabay-api';
+import responseData from './js/pixabay-api';
+import { makeGallery } from './js/render-functions';
 
 const searchForm = document.querySelector('.search-form');
+const input = document.querySelector('.js-input');
+const gallery = document.querySelector('.gallery');
+const loader = document.querySelector('.loader');
 
-function fetchImages(request) {
-    const URL = getUrl(request);
+let lightbox = new SimpleLightbox('.gallery a', {
+    captions: true,
+    captionsData: 'alt',
+    captionType: 'attr',
+    captionDelay: 250,
+    animationSpeed: 350,
+    captionPosition: 'bottom',
+});
 
-    return axios.get(URL)
-        .then(response => response.data.hits)
-        .catch(error => {
-            console.error('Error:', error);
-            return
-        });
+lightbox.on('show.simplelightbox', function () {});
+lightbox.on('error.simplelightbox', function (e) {
+  console.log(e);
+});
+
+function showLoader() {
+    loader.classList.remove('visually-hidden');
+};
+
+function hideLoader() {
+    loader.classList.add('visually-hidden');
+};
+
+const errorMessage = {
+    message: 'Sorry, there are no images matching your search query. Please try again!',
+    messageColor: '#fff',
+    backgroundColor: '#ef4040',
+    position: 'topRight',
+}
+
+const warning = {
+    message: 'Enter your search request!',
+    messageColor: '#000',
+    backgroundColor: '#f5c386',
+    position:'topRight',
 }
 
 searchForm.addEventListener('submit', event => {
     event.preventDefault();
     
-    const request = document.querySelector('.js-input').value.trim();
-    if (request==="") {
-        iziToast.warning({
-            title: '',
-            message: 'Enter search request',
-        })
-        return
+    const request = input.value.trim();
+    if (request === "") {
+        gallery.innerHTML = ""; 
+        hideLoader();
+        iziToast.warning(warning)
+        return;
     }
 
-    fetchImages(request)
-        .then(images => {
+    gallery.innerHTML = "";
+    showLoader();
+
+    responseData(request)
+        .then(data => {
+            const images = data.hits;
             if (images.length === 0) {
-                iziToast.error({
-                    title: '',
-                    message: 'Sorry, there are no images matching your search query. Please try again!',
-                })
+                iziToast.error(errorMessage);
             }
             else {
-                console.log(images);
+                makeGallery(images, gallery, lightbox);
             }
         })
-        .catch(error => console.log('Error request:', error));
-
+        .catch(error => {
+            iziToast.error({
+                message: 'Something went wrong. Please try again later.',
+                position: 'topRight',
+                backgroundColor: '#ef4040',
+                messageColor: '#fff',
+            })
+            console.log('Error request:', error);
+        })
+        .finally(() => {
+            hideLoader();
+            input.value = '';
+        });
 });
-
